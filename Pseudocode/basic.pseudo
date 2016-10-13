@@ -1,0 +1,17 @@
+if x = 10
+  x <- 10
+  if y >= 10
+    y <- 10
+  else
+    y <- Func(1, A[1..n])
+    while y < 10
+      y <- y + 1
+    end
+  end
+else
+  y <- 10
+end
+
+_ <- Func(1, A[1..n])
+
+print A[1..n]

@@ -26,7 +26,7 @@ indirect enum Expression {
     case arraySlice(String, lowerBound: Expression, upperBound: Expression)
 
     enum ComparativeOperator {
-        case lessThan, greaterThan, lessThanOrEqualTo, greaterThanOrEqualTo
+        case lessThan, greaterThan, lessThanOrEqualTo, greaterThanOrEqualTo, equalTo
     }
 
     enum AdditiveOperator {
@@ -45,12 +45,16 @@ indirect enum Expression {
 /// Statement
 /// Everything has side effects
 indirect enum Statement {
-    case nothing(Expression)
+    case bareExpression(Expression)
     case verbal(String)
-    case assign(String, Expression)
+    case assignment(String, Expression)
+    case print(Expression)
     case `if`(condition: Expression, body: [Statement], `else`: [Statement])
-    case `while`(condition: Expression, body: Expression)
-    case `for`(iterator: String, lowerBound: Expression, upperBound: Expression)
+    case `while`(condition: Expression, body: [Statement])
+//    case `for`(
+//        iterator: String, lowerBound: Expression, upperBound: Expression,
+//        body: [Statement]
+//    )
 }
 
 /// Definition
@@ -70,8 +74,14 @@ struct Definition {
     let body: [Statement]
 }
 
-/// Top Level Item
-enum TopLevelItem {
-    case definition(Definition)
-    case statement(Statement)
+/// Program
+struct Program {
+    enum TopLevelItem {
+        case definition(Definition)
+        case statement(Statement)
+    }
+
+    let name: String
+    let body: [TopLevelItem]
 }
+
