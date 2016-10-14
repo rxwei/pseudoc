@@ -25,8 +25,8 @@ enum ExpressionGrammar {
     private static let variable = Lexer.variableName ^^ Expression.variable
 
     /// Prefix operations
-    private static let negation = Lexer.regex("not\\s|[¬!]") ~~> rawExpression.! ^^ Expression.negation
-    private static let complement = Lexer.character("-") ~~> rawExpression.! ^^ Expression.complement
+    private static let negation = Lexer.regex("not\\s|[¬!]") ~~> simpleExpression.! ^^ Expression.negation
+    private static let complement = Lexer.character("-") ~~> simpleExpression.! ^^ Expression.complement
     
     /// Array addressing
     private static let arrayElement = Lexer.arrayName ~~
@@ -73,10 +73,10 @@ enum ExpressionGrammar {
 
     /// Full expression parser with infix expression precedence
     fileprivate static let rawExpression = simpleExpression.infixedLeft(by: multiplicativeOperator)
-                                               .infixedLeft(by: additiveOperator)
-                                               .infixedLeft(by: comparativeOperator)
-                                               .infixedLeft(by: logicalOperator)
-                                               .tagged("an expression")
+                                                           .infixedLeft(by: additiveOperator)
+                                                           .infixedLeft(by: comparativeOperator)
+                                                           .infixedLeft(by: logicalOperator)
+                                                           .tagged("an expression")
     static let expression = rawExpression.amid(Lexer.whitespaces.?)
 }
 

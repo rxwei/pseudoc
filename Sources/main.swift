@@ -50,6 +50,8 @@ do {
     switch arg {
         case "-expr":
             repl(parsing: ExpressionGrammar.expression)
+        case "-stmt":
+            repl(parsing: StatementGrammar.statement)
         case "-ast":
             let inputPath = CommandLine.arguments[2]
             let ast = try parseFile(inputPath)
